@@ -142,7 +142,7 @@ endif
 	@$(CC) $(CFLAGS) -ffreestanding -c $<
 
 qemu: CFLAGS += -D_DEBUG
-qemu: all OVMF_$(OVMF_ARCH).fd ntfs.vhd image/efi/boot/boot$(ARCH).efi image/efi/rufus/ntfs_$(ARCH).efi
+qemu: all OVMF_$(OVMF_ARCH).fd ntfs.vhd image/efi/boot/boot$(ARCH).efi image/efi/uefi_ntfs/ntfs_$(ARCH).efi
 	$(QEMU) $(QEMU_OPTS) -bios ./OVMF_$(OVMF_ARCH).fd -net none -hda fat:rw:image -hdb ntfs.vhd
 
 image/efi/boot/boot$(ARCH).efi: boot.efi
@@ -153,8 +153,8 @@ image/efi/boot/boot$(ARCH).efi: boot.efi
 ntfs_$(ARCH).efi:
 	wget https://efi.akeo.ie/downloads/efifs-latest/$(ARCH)/ntfs_$(ARCH).efi
 
-image/efi/rufus/ntfs_$(ARCH).efi: ntfs_$(ARCH).efi
-	mkdir -p image/efi/rufus
+image/efi/uefi_ntfs/ntfs_$(ARCH).efi: ntfs_$(ARCH).efi
+	mkdir -p image/efi/uefi_ntfs
 	cp -f $< $@
 
 # NTFS test image (contains boot[ia32|x64|arm|aa64].efi that say "Hello from NTFS!")

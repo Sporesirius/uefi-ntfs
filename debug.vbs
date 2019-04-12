@@ -7,7 +7,7 @@
 ' Note: You may get a prompt from the firewall when trying to download files
 
 ' Modify these variables as needed
-QEMU_PATH  = "C:\Program Files\qemu\"
+QEMU_PATH  = "D:\Program Files\qemu\"
 ' You can add something like "-S -gdb tcp:127.0.0.1:1234" if you plan to use gdb to debug
 QEMU_OPTS  = "-nodefaults -vga std -serial vc"
 ' Set to True if you need to download a file that might be cached locally
@@ -162,8 +162,8 @@ If Not fso.FileExists(DRV) Then
 End If
 
 ' Copy the files where required, and start QEMU
-Call shell.Run("%COMSPEC% /c mkdir ""image\efi\boot""", 0, True)
-Call fso.CopyFile(BIN, "image\efi\boot\" & BOOT_NAME, True)
-Call shell.Run("%COMSPEC% /c mkdir ""image\efi\rufus""", 0, True)
-Call fso.CopyFile(DRV, "image\efi\rufus\" & DRV, True)
+Call shell.Run("%COMSPEC% /c mkdir ""image\EFI\BOOT""", 0, True)
+Call fso.CopyFile(BIN, "image\EFI\BOOT\" & BOOT_NAME, True)
+Call shell.Run("%COMSPEC% /c mkdir ""image\EFI\UEFI_NTFS""", 0, True)
+Call fso.CopyFile(DRV, "image\EFI\UEFI_NTFS\" & DRV, True)
 Call shell.Run("""" & QEMU_PATH & QEMU_EXE & """ " & QEMU_OPTS & " -L . -bios " & FW_FILE & " -hda fat:rw:image -hdb ntfs.vhd", 1, True)
